@@ -4,6 +4,8 @@ const next = document.querySelector(".right-arrow");
 const previous = document.querySelector(".left-arrow");
 let circles;
 let currentIndex = 0;
+const inactiveCircle = "⚪"
+const activeCircle = "⚫"
 
 function hide(index) {
   images[index].setAttribute("hidden", true);
@@ -22,11 +24,11 @@ function removeActive(index) {
 }
 
 function setActiveCircle(index) {
-  circles[index].textContent = "⚫";
+  circles[index].textContent = activeCircle;
 }
 
 function removeActiveCircle(index) {
-  circles[index].textContent = "⚪";
+  circles[index].textContent = inactiveCircle;
 }
 
 function setCurrentIndex(index) {
@@ -43,7 +45,7 @@ function getCurrentIndex() {
     const newCircle = document.createElement("div");
     newCircle.setAttribute("data-index", i);
     newCircle.className = "circle";
-    newCircle.textContent = "⚪";
+    newCircle.textContent = inactiveCircle;
     circleContainer.appendChild(newCircle);
     
     newCircle.addEventListener("click", () => {
@@ -53,16 +55,11 @@ function getCurrentIndex() {
   return (circles = document.querySelectorAll(".circle"));
 })();
 
-setActiveCircle(currentIndex);
-
 function changeImage(newImgIndex) {
-  // remove active status and visuals for current
   hide(currentIndex);
   removeActive(currentIndex);
   removeActiveCircle(currentIndex);
-  // set new current
   setNewIndex(newImgIndex);
-  // add active status and visuals for new image
   unhide(currentIndex);
   setActive(currentIndex);
   setActiveCircle(currentIndex);
@@ -91,3 +88,5 @@ next.addEventListener("click", () => {
 previous.addEventListener("click", () => {
   changeImage("back");
 });
+
+setActiveCircle(currentIndex);
