@@ -2,6 +2,8 @@
 const images = document.querySelectorAll("img");
 const next = document.querySelector(".right-arrow");
 const previous = document.querySelector(".left-arrow");
+let circles;
+addCircleSelectors();
 let currentIndex = 0;
 
 function hide(index) {
@@ -10,6 +12,22 @@ function hide(index) {
 
 function unhide(index) {
   images[index].removeAttribute("hidden");
+}
+
+function setActive(index) {
+  images[index].className = "active";
+}
+
+function removeActive(index) {
+  images[index].classname = "";
+}
+
+function setActiveCircle(index) {
+  circles[index].textContent = "⚫";
+}
+
+function removeActiveCircle(index) {
+  circles[index].textContent = "⚪";
 }
 
 function addCircleSelectors() {
@@ -22,14 +40,5 @@ function addCircleSelectors() {
     circleContainer.appendChild(newCircle);
     // add eventlistener
   }
-}
-
-addCircleSelectors();
-
-function setActive(index) {
-  images[index].className = "active";
-}
-
-function removeActive(index) {
-  images[index].classname = "";
+  return (circles = document.querySelectorAll(".circle"));
 }
