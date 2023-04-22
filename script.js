@@ -4,7 +4,6 @@ const next = document.querySelector(".right-arrow");
 const previous = document.querySelector(".left-arrow");
 let circles;
 let currentIndex = 0;
-addCircleSelectors();
 
 function hide(index) {
   images[index].setAttribute("hidden", true);
@@ -38,7 +37,7 @@ function getCurrentIndex() {
   return currentIndex;
 }
 
-function addCircleSelectors() {
+(function addCircleSelectors() {
   const circleContainer = document.querySelector(".circles");
   for (let i = 0; i < images.length; i++) {
     const newCircle = document.createElement("div");
@@ -49,4 +48,40 @@ function addCircleSelectors() {
     // add eventlistener
   }
   return (circles = document.querySelectorAll(".circle"));
+})()
+
+setActiveCircle(currentIndex);
+
+function changeImage(newImg) {
+  // hide this image index
+  hide(currentIndex)
+  removeActive(currentIndex)
+  removeActiveCircle(currentIndex)
+  // set nextindex active
+  setNewIndex(newImg)
+  // show next image index
+  unhide(currentIndex)
+  setActive(currentIndex)
+  setActiveCircle(currentIndex)
+  // darken next image index
 }
+
+function setNewIndex(newImg) {
+  if (newImg === "fwd") {
+    // add constraint of max img available
+    return setCurrentIndex(++currentIndex)
+  } else if (newImg === "back") {
+    // add constraint of not below 0
+    return setCurrentIndex(--currentIndex)
+  } else {
+    return setCurrentIndex(parseFloat(newImg))
+  }
+}
+
+next.addEventListener("click", () => {
+  changeImage("fwd")
+})
+
+previous.addEventListener("click", () => {
+  changeImage("back")
+})
