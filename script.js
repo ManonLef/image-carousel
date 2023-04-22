@@ -41,6 +41,7 @@ function getCurrentIndex() {
 }
 
 function changeImage(newImgIndex) {
+  clearTimeout(fiveSecSlider)
   hide(currentIndex);
   removeActive(currentIndex);
   removeActiveCircle(currentIndex);
@@ -48,6 +49,7 @@ function changeImage(newImgIndex) {
   unhide(currentIndex);
   setActive(currentIndex);
   setActiveCircle(currentIndex);
+  autoChangeImage()
 }
 
 function setNewIndex(newImgIndex) {
@@ -62,6 +64,16 @@ function setNewIndex(newImgIndex) {
   } else {
     return setCurrentIndex(parseFloat(newImgIndex));
   }
+}
+
+function autoChangeImage() {
+  fiveSecSlider = setTimeout(() => {
+    if (currentIndex < images.length - 1) {
+      changeImage("fwd")
+    } else {
+      changeImage(0)
+    }
+  }, 5000);
 }
 
 function addCircleSelectors() {
@@ -90,3 +102,5 @@ function addCircleSelectors() {
     changeImage("back");
   });
 })();
+
+autoChangeImage()
