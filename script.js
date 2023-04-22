@@ -36,10 +36,6 @@ function setCurrentIndex(index) {
   return (currentIndex = index);
 }
 
-function getCurrentIndex() {
-  return currentIndex;
-}
-
 function changeImage(newImgIndex) {
   clearTimeout(fiveSecSlider)
   hide(currentIndex);
