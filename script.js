@@ -30,7 +30,7 @@ function removeActiveCircle(index) {
 }
 
 function setCurrentIndex(index) {
-  return currentIndex = index
+  return (currentIndex = index);
 }
 
 function getCurrentIndex() {
@@ -45,43 +45,49 @@ function getCurrentIndex() {
     newCircle.className = "circle";
     newCircle.textContent = "⚪";
     circleContainer.appendChild(newCircle);
-    // add eventlistener
+    
+    newCircle.addEventListener("click", () => {
+      changeImage(newCircle.getAttribute("data-index"))
+    })
   }
   return (circles = document.querySelectorAll(".circle"));
-})()
+})();
 
 setActiveCircle(currentIndex);
 
-function changeImage(newImg) {
-  // hide this image index
-  hide(currentIndex)
-  removeActive(currentIndex)
-  removeActiveCircle(currentIndex)
-  // set nextindex active
-  setNewIndex(newImg)
-  // show next image index
-  unhide(currentIndex)
-  setActive(currentIndex)
-  setActiveCircle(currentIndex)
-  // darken next image index
+function changeImage(newImgIndex) {
+  // remove active status and visuals for current
+  hide(currentIndex);
+  removeActive(currentIndex);
+  removeActiveCircle(currentIndex);
+  // set new current
+  setNewIndex(newImgIndex);
+  // add active status and visuals for new image
+  unhide(currentIndex);
+  setActive(currentIndex);
+  setActiveCircle(currentIndex);
 }
 
-function setNewIndex(newImg) {
-  if (newImg === "fwd") {
-    // add constraint of max img available
-    return setCurrentIndex(++currentIndex)
-  } else if (newImg === "back") {
-    // add constraint of not below 0
-    return setCurrentIndex(--currentIndex)
+function setNewIndex(newImgIndex) {
+  if (newImgIndex === "fwd") {
+    // conditional for last image
+    if (currentIndex < images.length - 1) {
+      return setCurrentIndex(++currentIndex);
+    }
+  } else if (newImgIndex === "back") {
+    // conditional for 1st image
+    if (currentIndex > 0) {
+      return setCurrentIndex(--currentIndex);
+    }
   } else {
-    return setCurrentIndex(parseFloat(newImg))
+    return setCurrentIndex(parseFloat(newImgIndex));
   }
 }
 
 next.addEventListener("click", () => {
-  changeImage("fwd")
-})
+  changeImage("fwd");
+});
 
 previous.addEventListener("click", () => {
-  changeImage("back")
-})
+  changeImage("back");
+});
