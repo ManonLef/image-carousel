@@ -2,10 +2,11 @@
 const images = document.querySelectorAll("img");
 const next = document.querySelector(".right-arrow");
 const previous = document.querySelector(".left-arrow");
+const inactiveCircle = "⚪";
+const activeCircle = "⚫";
 let circles;
 let currentIndex = 0;
-const inactiveCircle = "⚪"
-const activeCircle = "⚫"
+let fiveSecSlider;
 
 function hide(index) {
   images[index].setAttribute("hidden", true);
@@ -39,22 +40,6 @@ function getCurrentIndex() {
   return currentIndex;
 }
 
-(function addCircleSelectors() {
-  const circleContainer = document.querySelector(".circles");
-  for (let i = 0; i < images.length; i++) {
-    const newCircle = document.createElement("div");
-    newCircle.setAttribute("data-index", i);
-    newCircle.className = "circle";
-    newCircle.textContent = inactiveCircle;
-    circleContainer.appendChild(newCircle);
-    
-    newCircle.addEventListener("click", () => {
-      changeImage(newCircle.getAttribute("data-index"))
-    })
-  }
-  return (circles = document.querySelectorAll(".circle"));
-})();
-
 function changeImage(newImgIndex) {
   hide(currentIndex);
   removeActive(currentIndex);
@@ -67,12 +52,10 @@ function changeImage(newImgIndex) {
 
 function setNewIndex(newImgIndex) {
   if (newImgIndex === "fwd") {
-    // conditional for last image
     if (currentIndex < images.length - 1) {
       return setCurrentIndex(++currentIndex);
     }
   } else if (newImgIndex === "back") {
-    // conditional for 1st image
     if (currentIndex > 0) {
       return setCurrentIndex(--currentIndex);
     }
@@ -81,12 +64,29 @@ function setNewIndex(newImgIndex) {
   }
 }
 
-next.addEventListener("click", () => {
-  changeImage("fwd");
-});
+function addCircleSelectors() {
+  const circleContainer = document.querySelector(".circles");
+  for (let i = 0; i < images.length; i++) {
+    const newCircle = document.createElement("div");
+    newCircle.setAttribute("data-index", i);
+    newCircle.className = "circle";
+    newCircle.textContent = inactiveCircle;
+    circleContainer.appendChild(newCircle);
 
-previous.addEventListener("click", () => {
-  changeImage("back");
-});
+    newCircle.addEventListener("click", () => {
+      changeImage(newCircle.getAttribute("data-index"));
+    });
+  }
+  circles = document.querySelectorAll(".circle");
+  return setActiveCircle(currentIndex);
+}
 
-setActiveCircle(currentIndex);
+(function startUp() {
+  addCircleSelectors();
+  next.addEventListener("click", () => {
+    changeImage("fwd");
+  });
+  previous.addEventListener("click", () => {
+    changeImage("back");
+  });
+})();
