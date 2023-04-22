@@ -3,8 +3,8 @@ const images = document.querySelectorAll("img");
 const next = document.querySelector(".right-arrow");
 const previous = document.querySelector(".left-arrow");
 let circles;
-addCircleSelectors();
 let currentIndex = 0;
+addCircleSelectors();
 
 function hide(index) {
   images[index].setAttribute("hidden", true);
@@ -28,6 +28,14 @@ function setActiveCircle(index) {
 
 function removeActiveCircle(index) {
   circles[index].textContent = "⚪";
+}
+
+function setCurrentIndex(index) {
+  return currentIndex = index
+}
+
+function getCurrentIndex() {
+  return currentIndex;
 }
 
 function addCircleSelectors() {
