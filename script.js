@@ -2,8 +2,8 @@
 const images = document.querySelectorAll("img");
 const next = document.querySelector(".right-arrow");
 const previous = document.querySelector(".left-arrow");
-const inactiveCircle = "⚪";
-const activeCircle = "⚫";
+const inactiveCircle = "○";
+const activeCircle = "●";
 let circles;
 let currentIndex = 0;
 let fiveSecSlider;
